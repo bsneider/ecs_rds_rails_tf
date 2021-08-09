@@ -52,7 +52,7 @@ module "rds" {
   database_password = var.database_password
   subnet_ids        = module.networking.private_subnets_id
   vpc_id            = module.networking.vpc_id
-  instance_class    = "db.t2.micro"
+  instance_class    = "db.t3.micro"
 }
 
 module "ecs" {
