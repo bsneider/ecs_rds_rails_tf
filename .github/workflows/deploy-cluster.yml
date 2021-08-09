@@ -31,6 +31,7 @@ jobs:
       TF_VAR_database_password: ${{ secrets.DATABASE_PASSWORD }}
       TF_VAR_rabbit_name: ${{ secrets.RABBIT_NAME }}
       TF_VAR_environment: dev
+      TF_WORKSPACE: dev
 
     steps:
       # Checkout the repository to the GitHub Actions runner
@@ -43,10 +44,6 @@ jobs:
         with:
           terraform_version: 1.0.4
           cli_config_credentials_token: ${{ secrets.TF_API_USER_TOKEN }}
-
-      # Set terraform workspace based on env variable
-      - name: Select Terraform workspace
-        run: terraform workspace select $TF_VAR_environment
 
       # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
       - name: Terraform Init
