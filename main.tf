@@ -71,3 +71,4 @@ module "ecs" {
   secret_key_base     = var.secret_key_base
   region              = var.region
 }
+
