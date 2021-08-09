@@ -1,0 +1,54 @@
+---
+name: "Terraform Destroy"
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 22 * * *"
+
+jobs:
+  terraform:
+    name: "Terraform destroy"
+    runs-on: ubuntu-latest
+    environment: development
+
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      # Checkout the repository to the GitHub Actions runner
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          # aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }} # if you have/need it
+          aws-region: us-east-2
+
+      # install jq
+      - name: Install jq for aws cli json parsing
+        run: sudo apt-get install jq
+
+      #get load balancer arn and use it to delete load balancer
+      - name: Delete loadbalancer based on arn
+        run: |
+          aws elbv2 delete-load-balancer --load-balancer-arn $(aws elbv2 describe-load-balancers | jq '.LoadBalancers | .[] | select( .LoadBalancerArn | contains( "2048ingr")) | .LoadBalancerArn'| sed -e 's/^"//' -e 's/"$//')
+
+      # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          cli_config_credentials_token: ${{ secrets.TF_API_USER_TOKEN }}
+
+      # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+      - name: Terraform Init
+        run: terraform init
+
+      # Terraform Destroy auto approve
+      - name: Terraform Destroy
+        run: terraform destroy -auto-approve
