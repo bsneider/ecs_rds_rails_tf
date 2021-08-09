@@ -48,6 +48,10 @@ jobs:
       - name: Terraform Init
         run: terraform init
 
+      # Set terraform workspace based on env variable
+      - name: Select Terraform workspace
+        run: terraform select workspace $TF_VAR_environment
+
       # Checks that all Terraform configuration files adhere to a canonical format
       - name: Terraform Format
         run: terraform fmt -check

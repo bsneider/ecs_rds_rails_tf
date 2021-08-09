@@ -69,4 +69,5 @@ module "ecs" {
   database_username   = var.database_username
   database_password   = var.database_password
   secret_key_base     = var.secret_key_base
+  region              = var.region
 }
