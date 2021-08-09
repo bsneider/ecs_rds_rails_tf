@@ -44,7 +44,7 @@ variable "database_password" {
 variable "rds_engine_version" {
   description = "if defaults are set then minor version will auto increment in patching window"
   type        = string
-  default     = "9.6.6"
+  default     = "13.3"
 }
 
 variable "rds_engine" {
