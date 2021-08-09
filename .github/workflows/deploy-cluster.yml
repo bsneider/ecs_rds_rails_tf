@@ -24,6 +24,12 @@ jobs:
       TF_VAR_login_approle_role_id: ${{ secrets.LOGIN_APPROLE_ROLE_ID }}
       TF_VAR_login_approle_secret_id: ${{ secrets.LOGIN_APPROLE_SECRET_ID }}
       TF_VAR_secret_key_base: ${{ secrets.SECRET_KEY_BASE }}
+      TF_VAR_region: ${{ secrets.REGION }}
+      TF_VAR_domain: ${{ secrets.DOMAIN }}
+      TF_VAR_database_name: ${{ secrets.DATABASE_NAME }}
+      TF_VAR_database_username: ${{ secrets.DATABASE_USERNAME }}
+      TF_VAR_database_password: ${{ secrets.DATABASE_PASSWORD }}
+      TF_VAR_rabbit_name: ${{ secrets.RABBIT_NAME }}
 
     steps:
       # Checkout the repository to the GitHub Actions runner
