@@ -24,7 +24,6 @@ jobs:
       TF_VAR_login_approle_role_id: ${{ secrets.LOGIN_APPROLE_ROLE_ID }}
       TF_VAR_login_approle_secret_id: ${{ secrets.LOGIN_APPROLE_SECRET_ID }}
       TF_VAR_secret_key_base: ${{ secrets.SECRET_KEY_BASE }}
-      TF_VAR_environment: ${{ environment }}
 
     steps:
       # Checkout the repository to the GitHub Actions runner
