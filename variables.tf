@@ -35,7 +35,7 @@ variable "rabbit_name" {
   description = "A random environment"
 }
 
-variable "environment" {
+variable "tf_workspace" {
   description = "Environment for the application"
 }
 
