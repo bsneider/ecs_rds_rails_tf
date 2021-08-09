@@ -30,7 +30,6 @@ jobs:
       TF_VAR_database_username: ${{ secrets.DATABASE_USERNAME }}
       TF_VAR_database_password: ${{ secrets.DATABASE_PASSWORD }}
       TF_VAR_rabbit_name: ${{ secrets.RABBIT_NAME }}
-      TF_VAR_environment: dev
       TF_WORKSPACE: dev
 
     steps:

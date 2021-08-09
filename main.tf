@@ -11,7 +11,7 @@ terraform {
 
 module "aws_creds" {
   source                  = "./modules/aws_creds"
-  environment             = var.environment
+  environment             = var.tf_workspace
   vault_addr              = var.vault_addr
   login_approle_role_id   = var.login_approle_role_id
   login_approle_secret_id = var.login_approle_secret_id
@@ -25,7 +25,7 @@ provider "aws" {
   token      = module.aws_creds.token
   default_tags {
     tags = {
-      Environment = var.environment
+      Environment = var.tf_workspace
       Owner       = "Ops"
       Project     = "ecs_rds_rails_tf"
     }
@@ -34,7 +34,7 @@ provider "aws" {
 
 module "networking" {
   source               = "./modules/networking"
-  environment          = var.environment
+  environment          = var.tf_workspace
   vpc_cidr             = "10.0.0.0/16"
   public_subnets_cidr  = ["10.0.1.0/24", "10.0.2.0/24"]
   private_subnets_cidr = ["10.0.10.0/24", "10.0.20.0/24"]
@@ -45,7 +45,7 @@ module "networking" {
 
 module "rds" {
   source            = "./modules/rds"
-  environment       = var.environment
+  environment       = var.tf_workspace
   allocated_storage = "20"
   database_name     = var.database_name
   database_username = var.database_username
@@ -57,7 +57,7 @@ module "rds" {
 
 module "ecs" {
   source              = "./modules/ecs"
-  environment         = var.environment
+  environment         = var.tf_workspace
   vpc_id              = module.networking.vpc_id
   availability_zones  = var.availability_zones
   repository_name     = "rails_terraform/production"
