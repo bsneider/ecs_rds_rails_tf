@@ -35,10 +35,6 @@ variable "rabbit_name" {
   description = "A random environment"
 }
 
-variable "environment" {
-  description = "Environment for the application"
-}
-
 variable "availability_zones" {
   type        = list(string)
   description = "a comma-separated list of availability zones, defaults to all AZ of the region, if set to something other than the defaults, both private_subnets and public_subnets have to be defined as well"

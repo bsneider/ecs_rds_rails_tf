@@ -6,6 +6,11 @@ variable "vpc_id" {
   description = "The VPC id"
 }
 
+variable "region" {
+  type        = string
+  description = "Region that the instances will be created"
+}
+
 variable "availability_zones" {
   type        = list(string)
   description = "The azs to use"
